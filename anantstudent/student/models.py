@@ -5,7 +5,7 @@ from django.db import models
 from django.db import models
 
 class Student(models.Model):
-    sl_no = models.IntegerField()
+    sl_no = models.IntegerField(null=True)
     benf_no = models.CharField(max_length=150, blank=True, null=True)
     aadhar_no = models.CharField(max_length=150, blank=True, null=True)
     name = models.CharField(max_length=500, blank=True, null=True)  # Increased for long names

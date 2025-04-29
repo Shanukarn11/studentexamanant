@@ -1,14 +1,15 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block content %}
-<h2>Upload Students (CSV)</h2>
+<h2>Upload Students (CSV / Excel)</h2>
 
 <form method="post" enctype="multipart/form-data">
     {% csrf_token %}
     <div class="mb-3">
-        <input type="file" name="csv_file" class="form-control" required>
+        <input type="file" name="file" class="form-control" accept=".csv, .xls, .xlsx" required>
     </div>
-    <button type="submit" class="btn btn-primary">Upload CSV</button>
+    <button type="submit" class="btn btn-primary">Upload File</button>
 </form>
 
 {% if messages %}

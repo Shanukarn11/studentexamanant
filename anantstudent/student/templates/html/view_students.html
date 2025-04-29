@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<h2>All Students</h2>
+
+<!-- Filter Form -->
+<form method="get" class="row g-2 mb-3">
+    <div class="col-md-3">
+        <select name="school_name" class="form-select">
+            <option value="">-- Select School Name --</option>
+            {% for school_name in school_names %}
+                <option value="{{ school_name }}" {% if request.GET.school_name == school_name %}selected{% endif %}>{{ school_name }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="col-md-2">
+        <select name="standard" class="form-select">
+            <option value="">-- Select Standard --</option>
+            {% for standard in standards %}
+                <option value="{{ standard }}" {% if request.GET.standard == standard %}selected{% endif %}>{{ standard }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="col-md-3">
+        <select name="district" class="form-select">
+            <option value="">-- Select District --</option>
+            {% for district in districts %}
+                <option value="{{ district }}" {% if request.GET.district == district %}selected{% endif %}>{{ district }}</option>
+            {% endfor %}
+        </select>
+    </div>
+
+    <div class="col-md-2">
+        <button type="submit" class="btn btn-primary w-100">Apply Filters</button>
+    </div>
+
+    <div class="col-md-2">
+        <a href="{% url 'download_students' %}?{{ request.GET.urlencode }}" class="btn btn-success w-100">Download Excel</a>
+    </div>
+</form>
+
+<div class="table-responsive">
+    <table class="table table-bordered table-striped">
+        <thead class="table-dark">
+            <tr>
+                <th>Sl No</th>
+                <th>Beneficiary No</th>
+                <th>Name</th>
+                <th>Standard</th>
+                <th>Gender</th>
+                <th>Contact No</th>
+                <th>School Name</th>
+                <th>District</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for student in students %}
+            <tr>
+                <td>{{ student.sl_no }}</td>
+                <td>{{ student.benf_no }}</td>
+                <td>{{ student.name }}</td>
+                <td>{{ student.standard }}</td>
+                <td>{{ student.gender }}</td>
+                <td>{{ student.contact_no }}</td>
+                <td>{{ student.school_name }}</td>
+                <td>{{ student.district }}</td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="8">No data found.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
