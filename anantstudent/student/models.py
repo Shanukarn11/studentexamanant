@@ -23,3 +23,41 @@ class Student(models.Model):
     def __str__(self):
         return self.name
 
+class BaselineResult(models.Model):
+    name = models.CharField(max_length=255,blank=True, null=True)
+    standard = models.CharField(max_length=20,blank=True, null=True)
+
+    # Questions Q1 to Q30
+    q1 = models.IntegerField( blank=True, null=True)
+    q2 = models.IntegerField( blank=True, null=True)
+    q3 = models.IntegerField( blank=True, null=True)
+    q4 = models.IntegerField( blank=True, null=True)
+    q5 = models.IntegerField( blank=True, null=True)
+    q6 = models.IntegerField( blank=True, null=True)
+    q7 = models.IntegerField( blank=True, null=True)
+    q8 = models.IntegerField( blank=True, null=True)
+    q9 = models.IntegerField( blank=True, null=True)
+    q10 = models.IntegerField( blank=True, null=True)
+    q11 = models.IntegerField( blank=True, null=True)
+    q12 = models.IntegerField( blank=True, null=True)
+    q13 = models.IntegerField( blank=True, null=True)
+    q14 = models.IntegerField( blank=True, null=True)
+    q15 = models.IntegerField( blank=True, null=True)
+    q16 = models.IntegerField( blank=True, null=True)
+    q17 = models.IntegerField( blank=True, null=True)
+    q18 = models.IntegerField( blank=True, null=True)
+    q19 = models.IntegerField( blank=True, null=True)
+    q20 = models.IntegerField( blank=True, null=True)
+    q21 = models.IntegerField( blank=True, null=True)
+    q22 = models.IntegerField( blank=True, null=True)
+    q23 = models.IntegerField( blank=True, null=True)
+    q24 = models.IntegerField( blank=True, null=True)
+    q25 = models.IntegerField( blank=True, null=True)
+    q26 = models.IntegerField( blank=True, null=True)
+    q27 = models.IntegerField( blank=True, null=True)
+    q28 = models.IntegerField( blank=True, null=True)
+    q29 = models.IntegerField( blank=True, null=True)
+    q30 = models.IntegerField( blank=True, null=True)
+
+    total_marks = models.IntegerField(blank=True, null=True)
+    phase = models.CharField(max_length=100,blank=True, null=True)

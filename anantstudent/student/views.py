@@ -1,5 +1,8 @@
 from django.shortcuts import render
 from django.http import HttpResponse
+from .models import BaselineResult
+from django.core.paginator import Paginator
+
 
 # Create your views here.
 
@@ -161,3 +164,104 @@ def download_students(request):
     df.to_excel(response, index=False)
     return response
 
+
+def upload_baseline(request):
+    if request.method == 'POST':
+        uploaded_file = request.FILES.get('file')
+        if not uploaded_file:
+            messages.error(request, "No file uploaded.")
+            return redirect('upload_baseline')
+
+        try:
+            if uploaded_file.name.endswith('.csv'):
+                df = pd.read_csv(uploaded_file)
+            elif uploaded_file.name.endswith(('.xls', '.xlsx')):
+                df = pd.read_excel(uploaded_file)
+            else:
+                messages.error(request, "Please upload a CSV or Excel file.")
+                return redirect('upload_baseline')
+
+            df = df.where(pd.notnull(df), None)
+
+            baseline_entries = []
+            for _, row in df.iterrows():
+                baseline_entries.append(BaselineResult(
+                    name=row.get('Name of the student'),
+                    standard=row.get('Standard'),
+                    q1=row.get('Q.1'),
+                    q2=row.get('Q.2'),
+                    q3=row.get('Q.3'),
+                    q4=row.get('Q.4'),
+                    q5=row.get('Q.5'),
+                    q6=row.get('Q.6'),
+                    q7=row.get('Q.7'),
+                    q8=row.get('Q.8'),
+                    q9=row.get('Q.9'),
+                    q10=row.get('Q.10'),
+                    q11=row.get('Q.11'),
+                    q12=row.get('Q.12'),
+                    q13=row.get('Q.13'),
+                    q14=row.get('Q.14'),
+                    q15=row.get('Q.15'),
+                    q16=row.get('Q.16'),
+                    q17=row.get('Q.17'),
+                    q18=row.get('Q.18'),
+                    q19=row.get('Q.19'),
+                    q20=row.get('Q.20'),
+                    q21=row.get('Q.21'),
+                    q22=row.get('Q.22'),
+                    q23=row.get('Q.23'),
+                    q24=row.get('Q.24'),
+                    q25=row.get('Q.25'),
+                    q26=row.get('Q.26'),
+                    q27=row.get('Q.27'),
+                    q28=row.get('Q.28'),
+                    q29=row.get('Q.29'),
+                    q30=row.get('Q.30'),
+                    total_marks=row.get('Total Marks'),
+                    phase=row.get('Phase'),
+                ))
+
+            BaselineResult.objects.bulk_create(baseline_entries)
+
+            messages.success(request, "Baseline results uploaded successfully!")
+
+        except Exception as e:
+            messages.error(request, f"Error processing file: {e}")
+
+        return redirect('upload_baseline')
+
+    # This is the response when method is GET
+    return render(request, 'html/upload_baseline.html')
+
+
+def view_baseline(request):
+    standard = request.GET.get('standard')
+    phase = request.GET.get('phase')
+
+    results = BaselineResult.objects.all().order_by('-total_marks')
+
+    if standard:
+        results = results.filter(standard=standard)
+    if phase:
+        results = results.filter(phase=phase)
+    questions=['q1', 'q2', 'q3', 'q4', 'q5', 'q6', 'q7', 'q8', 'q9', 'q10', 'q11', 'q12', 'q13', 'q14', 'q15',
+ 'q16', 'q17', 'q18', 'q19', 'q20', 'q21', 'q22', 'q23', 'q24', 'q25', 'q26', 'q27', 'q28', 'q29', 'q30']
+    # Get distinct values for filters
+    standards = BaselineResult.objects.values_list('standard', flat=True).distinct()
+    phases = BaselineResult.objects.values_list('phase', flat=True).distinct()
+
+    paginator = Paginator(results, 100)
+    page = request.GET.get('page')
+    page_obj = paginator.get_page(page)
+
+    context = {
+        'page_obj': page_obj,
+        'standards': standards,
+        'phases': phases,
+        'selected_standard': standard,
+        'selected_phase': phase,
+        'questions':questions,
+        'students':results
+    }
+    return render(request, 'html/view_baseline.html', context)

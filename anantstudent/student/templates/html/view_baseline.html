@@ -1,0 +1,91 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<h2>View Baseline Results</h2>
+
+<!-- Filter Form -->
+<form method="get" class="row g-2 mb-3">
+    <div class="col-md-3">
+        <select name="standard" class="form-select">
+            <option value="">-- Select Standard --</option>
+            {% for standard in standards %}
+                <option value="{{ standard }}" {% if request.GET.standard == standard %}selected{% endif %}>{{ standard }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="col-md-3">
+        <select name="phase" class="form-select">
+            <option value="">-- Select Phase --</option>
+            {% for phase in phases %}
+                <option value="{{ phase }}" {% if request.GET.phase == phase %}selected{% endif %}>{{ phase }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="col-md-2">
+        <button type="submit" class="btn btn-primary w-100">Apply Filters</button>
+    </div>
+</form>
+
+<div class="table-responsive">
+    <table class="table table-bordered table-striped">
+        <thead class="table-dark">
+            <tr>
+                <th>Name</th>
+                <th>Standard</th>
+                <th>Phase</th>
+                <th>Total</th>
+                {% for question in questions %}
+                <th>{{ question|upper }}</th>
+            {% endfor %}
+            
+            
+            </tr>
+        </thead>
+        <tbody>
+            {% for student in students %}
+            <tr>
+                <td>{{ student.name }}</td>
+                <td>{{ student.standard }}</td>
+                <td>{{ student.phase }}</td>
+                <td>{{ student.total_marks }}</td>
+                <td>{% if student.q1 == 1 %}✅{% elif student.q1 == 0 %}❌{% else %}-{% endif %}</td>
+                <td>{% if student.q2 == 1 %}✅{% elif student.q2 == 0 %}❌{% else %}-{% endif %}</td>
+                <td>{% if student.q3 == 1 %}✅{% elif student.q3 == 0 %}❌{% else %}-{% endif %}</td>
+                <td>{% if student.q4 == 1 %}✅{% elif student.q4 == 0 %}❌{% else %}-{% endif %}</td>
+                <td>{% if student.q5 == 1 %}✅{% elif student.q5 == 0 %}❌{% else %}-{% endif %}</td>
+                <td>{% if student.q6 == 1 %}✅{% elif student.q6 == 0 %}❌{% else %}-{% endif %}</td>
+                <td>{% if student.q7 == 1 %}✅{% elif student.q7 == 0 %}❌{% else %}-{% endif %}</td>
+                <td>{% if student.q8 == 1 %}✅{% elif student.q8 == 0 %}❌{% else %}-{% endif %}</td>
+                <td>{% if student.q9 == 1 %}✅{% elif student.q9 == 0 %}❌{% else %}-{% endif %}</td>
+                <td>{% if student.q10 == 1 %}✅{% elif student.q10 == 0 %}❌{% else %}-{% endif %}</td>
+                <td>{% if student.q11 == 1 %}✅{% elif student.q11 == 0 %}❌{% else %}-{% endif %}</td>
+                <td>{% if student.q12 == 1 %}✅{% elif student.q12 == 0 %}❌{% else %}-{% endif %}</td>
+                <td>{% if student.q13 == 1 %}✅{% elif student.q13 == 0 %}❌{% else %}-{% endif %}</td>
+                <td>{% if student.q14 == 1 %}✅{% elif student.q14 == 0 %}❌{% else %}-{% endif %}</td>
+                <td>{% if student.q15 == 1 %}✅{% elif student.q15 == 0 %}❌{% else %}-{% endif %}</td>
+                <td>{% if student.q16 == 1 %}✅{% elif student.q16 == 0 %}❌{% else %}-{% endif %}</td>
+                <td>{% if student.q17 == 1 %}✅{% elif student.q17 == 0 %}❌{% else %}-{% endif %}</td>
+                <td>{% if student.q18 == 1 %}✅{% elif student.q18 == 0 %}❌{% else %}-{% endif %}</td>
+                <td>{% if student.q19 == 1 %}✅{% elif student.q19 == 0 %}❌{% else %}-{% endif %}</td>
+                <td>{% if student.q20 == 1 %}✅{% elif student.q20 == 0 %}❌{% else %}-{% endif %}</td>
+                <td>{% if student.q21 == 1 %}✅{% elif student.q21 == 0 %}❌{% else %}-{% endif %}</td>
+                <td>{% if student.q22 == 1 %}✅{% elif student.q22 == 0 %}❌{% else %}-{% endif %}</td>
+                <td>{% if student.q23 == 1 %}✅{% elif student.q23 == 0 %}❌{% else %}-{% endif %}</td>
+                <td>{% if student.q24 == 1 %}✅{% elif student.q24 == 0 %}❌{% else %}-{% endif %}</td>
+                <td>{% if student.q25 == 1 %}✅{% elif student.q25 == 0 %}❌{% else %}-{% endif %}</td>
+                <td>{% if student.q26 == 1 %}✅{% elif student.q26 == 0 %}❌{% else %}-{% endif %}</td>
+                <td>{% if student.q27 == 1 %}✅{% elif student.q27 == 0 %}❌{% else %}-{% endif %}</td>
+                <td>{% if student.q28 == 1 %}✅{% elif student.q28 == 0 %}❌{% else %}-{% endif %}</td>
+                <td>{% if student.q29 == 1 %}✅{% elif student.q29 == 0 %}❌{% else %}-{% endif %}</td>
+                <td>{% if student.q30 == 1 %}✅{% elif student.q30 == 0 %}❌{% else %}-{% endif %}</td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="35">No data found.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
