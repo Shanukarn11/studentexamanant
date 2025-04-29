@@ -8,7 +8,7 @@
 <form method="get" class="row g-2 mb-3">
     <div class="col-md-3">
         <select name="standard" class="form-select">
-            <option value="">-- Select Standard --</option>
+            <option value="" {% if not request.GET.standard %}selected{% endif %}>-- Select Standard --</option>
             {% for standard in standards %}
                 <option value="{{ standard }}" {% if request.GET.standard == standard %}selected{% endif %}>{{ standard }}</option>
             {% endfor %}
